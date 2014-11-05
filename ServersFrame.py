@@ -1,0 +1,42 @@
+__author__ = 'zhuhongbao'
+# -*- coding: GBK  -*-
+import wx
+def setupAllShow(self):
+    self.panel = wx.Panel(self)
+    icon = wx.Icon('logo.ico', wx.BITMAP_TYPE_ICO)
+    self.SetIcon(icon) #设置Frame标题的图标
+
+# self.control = wx.TextCtrl(self.panel, style=wx.TE_MULTILINE)
+    # self.label1=wx.StaticText(self.panel,id=-1,label="选择操作方式:",pos=(60,20))
+    # self.label2=wx.StaticText(self.panel,id=-1,label="设置执行参数:",pos=(180,20))
+    self.label3=wx.StaticText(self.panel,id=-1,label="IP/PASSWD",pos=(180,20))
+    self.label4=wx.StaticText(self.panel,id=-1,label="输入命令",pos=(480,20))
+    self.label5=wx.StaticText(self.panel,id=-1,label="本地目录",pos=(480,210))
+    self.label6=wx.StaticText(self.panel,id=-1,label="远程目录",pos=(480,260))
+    self.label7=wx.StaticText(self.panel,id=-1,label="KEY 密码",pos=(480,310))
+    self.label10=wx.StaticText(self.panel,id=-1,label="KEY 目录",pos=(480,360))
+    self.label9=wx.StaticText(self.panel,id=-1,label="端口",pos=(480,410))
+    self.label8=wx.StaticText(self.panel,id=-1,label="运行日志",pos=(180,420))
+    self.label11=wx.StaticText(self.panel,id=-1,label="注意：运行结果日志记录在应用程序目录中的ssh_info.log文件！",pos=(180,660))
+    self.label11.SetBackgroundColour('EEE8CD')
+    self.radio1=wx.RadioButton(self.panel,id=-1,label="执行命令",pos=(60,20))
+    self.radio2=wx.RadioButton(self.panel,id=-1,label="上传文件",pos=(60,160))#-40
+    self.radio3=wx.RadioButton(self.panel,id=-1,label="下载文件",pos=(60,300))
+    self.check1=wx.CheckBox(self.panel,id=-1,label="使用KEY",pos=(60,440))
+    self.txt_info=wx.TextCtrl(self.panel,style=wx.TE_MULTILINE|wx.HSCROLL,pos=(260,20),size=(200,400))
+    self.txt_info.SetBackgroundColour('#B0C4DE')
+    self.txt_cmd=wx.TextCtrl(self.panel,style=wx.TE_MULTILINE|wx.HSCROLL,pos=(540,20),size=(220,150))
+    self.txt_log=wx.TextCtrl(self.panel,style=wx.TE_MULTILINE|wx.HSCROLL,pos=(180,460),size=(700,190))
+    self.txt_port=wx.TextCtrl(self.panel,id=-1,pos=(540,410),size=(80,-1),value="22")
+    self.txt_local=wx.TextCtrl(self.panel,id=-1,pos=(540,210),size=(220,-1),value='D:\\tmp')
+    self.txt_remote=wx.TextCtrl(self.panel,id=-1,pos=(540,260),size=(220,-1),value="/tmp/")
+    self.txt_keypwd=wx.TextCtrl(self.panel,id=-1,pos=(540,310),size=(160,-1), style=wx.TE_PASSWORD)
+    self.txt_keyfile=wx.TextCtrl(self.panel,id=-1,pos=(540,360),size=(220,-1))
+    self.btn_run=wx.Button(self.panel,label='运行',size=(80,25),pos=(800,20))
+    self.btn_view=wx.Button(self.panel,label='浏览',size=(80,25),pos=(800,210))
+    self.btn_keyview=wx.Button(self.panel,label='浏览',size=(80,25),pos=(800,360))
+    self.btn_clear=wx.Button(self.panel,label='清空日志',size=(80,25),pos=(800,420))
+    self.txt_cmd.SetValue("uname -a")
+    self.txt_info.SetValue("192.168.12.12")
+    self.txt_keypwd.SetValue("passwd")
+    self.txt_keyfile.SetValue("D:\code\python\pro01\id_dsa_all")
