@@ -1,6 +1,6 @@
-__author__ = 'ruberzhu'
+__author__ = 'zhuhongbao'
 # -*- coding: GBK  -*-
-'''ÅúÁ¿Ö´ĞĞÃüÁî'''
+'''æ‰¹é‡æ‰§è¡Œå‘½ä»¤'''
 import wx
 import sys
 import paramiko
@@ -26,7 +26,7 @@ class StatusBar(wx.StatusBar):
     def setValue(self,value):
         self.gauge.SetValue(value)
 class MainWindow(wx.Frame):
-    '''¶¨ÒåÒ»¸ö´°¿ÚÀà'''
+    '''å®šä¹‰ä¸€ä¸ªçª—å£ç±»'''
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(1000, 750),pos=wx.DefaultPosition,style=wx.DEFAULT_FRAME_STYLE ^ (wx.RESIZE_BORDER | wx.MAXIMIZE_BOX))
         now = datetime.datetime.now()
@@ -40,7 +40,7 @@ class MainWindow(wx.Frame):
         self.bindBtnView()
         self.bindBtnKeyView()
         statusbar=self.CreateStatusBar(number=2)
-        statusbar.SetStatusText("Ê±¼ä£º%s"%(date),0)
+        statusbar.SetStatusText("æ—¶é—´ï¼š%s"%(date),0)
         self.Show(True)
     def setuptime(self):
         self.Bind(wx.EVT_TIMER, self.OnTimeout,self.timer)
@@ -64,7 +64,7 @@ class MainWindow(wx.Frame):
     def onRadio(self,event):
         radioSelected=event.GetEventObject()
         self.radio1=radioSelected.GetLabel()
-        if cmp(self.radio1,("Ö´ĞĞÃüÁî".decode('gbk')))==0:
+        if cmp(self.radio1,("æ‰§è¡Œå‘½ä»¤".decode('gbk')))==0:
             self.txt_local.Enable(False)
             self.txt_remote.Enable(False)
             self.btn_view.Enable(False)
@@ -83,7 +83,7 @@ class MainWindow(wx.Frame):
                 self.txt_keypwd.Enable(False)
                 self.txt_keyfile.Enable(False)
                 self.btn_keyview.Enable(False)
-        if cmp(self.radio1,("ÉÏ´«ÎÄ¼ş".decode('gbk')))==0:
+        if cmp(self.radio1,("ä¸Šä¼ æ–‡ä»¶".decode('gbk')))==0:
             self.txt_local.Enable(True)
             self.txt_remote.Enable(True)
             self.btn_view.Enable(True)
@@ -101,7 +101,7 @@ class MainWindow(wx.Frame):
                 self.txt_keypwd.Enable(False)
                 self.txt_keyfile.Enable(False)
                 self.btn_keyview.Enable(False)
-        if cmp(self.radio1,("ÏÂÔØÎÄ¼ş".decode('gbk')))==0:
+        if cmp(self.radio1,("ä¸‹è½½æ–‡ä»¶".decode('gbk')))==0:
             self.txt_local.Enable(True)
             self.txt_remote.Enable(True)
             self.btn_view.Enable(True)
@@ -140,7 +140,7 @@ class MainWindow(wx.Frame):
             self.txt_local.SetValue(dir_dialog.GetPath())
             dir_dialog.Destroy()
     def onBtnKeyView(self,event):
-        file_dialog=wx.FileDialog(self,message="Ñ¡ÔñKeyÎÄ¼ş",defaultDir="",defaultFile="", wildcard="*.*", style=wx.OPEN)
+        file_dialog=wx.FileDialog(self,message="é€‰æ‹©Keyæ–‡ä»¶",defaultDir="",defaultFile="", wildcard="*.*", style=wx.OPEN)
         # dir_dialog=wx.DirDialog(self,message=wx.DirSelectorPromptStr,defaultPath="",style=wx.DD_NEW_DIR_BUTTON,pos=wx.DefaultPosition)
         if file_dialog.ShowModal()==wx.ID_OK:
             self.txt_keyfile.SetValue(file_dialog.GetPath())
@@ -152,19 +152,19 @@ class MainWindow(wx.Frame):
         self.cdone=[]
         self.count=0
         fileName='ssh_info.log'
-        mode='w+'         #Í¨¹ı×·¼ÓĞ´ÈÕÖ¾ÎÄ¼ş
+        mode='w+'         #é€šè¿‡è¿½åŠ å†™æ—¥å¿—æ–‡ä»¶
         file=open(fileName,mode)
-        if cmp(self.radio1,("Ö´ĞĞÃüÁî".decode('gbk')))==0:
+        if cmp(self.radio1,("æ‰§è¡Œå‘½ä»¤".decode('gbk')))==0:
             if self.check1.GetValue():
                 self.setupCmdKey(file)
             else:
                 self.setupCmd(file)
-        if cmp(self.radio1,("ÉÏ´«ÎÄ¼ş".decode('gbk')))==0:
+        if cmp(self.radio1,("ä¸Šä¼ æ–‡ä»¶".decode('gbk')))==0:
             if self.check1.GetValue():
                 self.setupUploadKey(file)
             else:
                 self.setupUpload(file)
-        if cmp(self.radio1,("ÏÂÔØÎÄ¼ş".decode('gbk')))==0:
+        if cmp(self.radio1,("ä¸‹è½½æ–‡ä»¶".decode('gbk')))==0:
             if self.check1.GetValue():
                 self.setupDownloadKey(file)
             else:
@@ -177,26 +177,26 @@ class MainWindow(wx.Frame):
         self.timeout=2
         self.username='root'
         if value_info=='':
-            self.setupLog(args_log="IP¼°ÃÜÂëĞÅÏ¢Îª¿Õ£¡£¡£¡")
+            self.setupLog(args_log="IPåŠå¯†ç ä¿¡æ¯ä¸ºç©ºï¼ï¼ï¼")
         else:
             line_cmd=self.txt_cmd.GetNumberOfLines()
             value_cmd=self.txt_cmd.GetValue()
             if value_cmd=='':
-                self.setupLog(args_log="ÃüÁîĞÅÏ¢Îª¿Õ!!!")
+                self.setupLog(args_log="å‘½ä»¤ä¿¡æ¯ä¸ºç©º!!!")
             else:
                 if self.portstr=='':
-                    self.setupLog(args_log="¶Ë¿ÚĞÅÏ¢Îª¿Õ!!!")
+                    self.setupLog(args_log="ç«¯å£ä¿¡æ¯ä¸ºç©º!!!")
                 else:
                     self.port=int(self.portstr)
                     try:
                         for j in range(0,line_cmd,1):
                             line_cmds=self.txt_cmd.GetLineText(j).strip()
-                            #»ñÈ¡ÃüÁî
+                            #è·å–å‘½ä»¤
                             self.cmds.append(line_cmds)
                         self.setupLog(args_log="[Command:] %s"%(string.join(self.cmds)))
                     except Exception , e:
                         self.setupLog(args_log='**************************************************************')
-                        self.setupLog(args_log="Çë¼ì²éÃüÁîĞÅÏ¢ÊÇ·ñÕıÈ·£¡£¡£¡")
+                        self.setupLog(args_log="è¯·æ£€æŸ¥å‘½ä»¤ä¿¡æ¯æ˜¯å¦æ­£ç¡®ï¼ï¼ï¼")
                     try:
                         threads=[]
                         self.setupLog(args_log='****ALL START CMD****')
@@ -217,10 +217,10 @@ class MainWindow(wx.Frame):
                             #     mutex.acquire()
                             #     threads[i].start()
                             #     mutex.release()
-                            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬¿ªÊ¼Ö´ĞĞ¡­¡­'%(self.count))
+                            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œå¼€å§‹æ‰§è¡Œâ€¦â€¦'%(self.count))
                     except Exception , e:
                         self.setupLog(args_log='**************************************************************')
-                        self.setupLog(args_log="Çë¼ì²éIP¼°ÃÜÂëĞÅÏ¢ÊÇ·ñÕıÈ·£¡£¡£¡")
+                        self.setupLog(args_log="è¯·æ£€æŸ¥IPåŠå¯†ç ä¿¡æ¯æ˜¯å¦æ­£ç¡®ï¼ï¼ï¼")
                         self.setupLog(args_log="[error][ip]"+self.now_time+" "+str(e))
                         self.btn_run.Enable(True)
     def setupUpload(self,file):
@@ -229,19 +229,19 @@ class MainWindow(wx.Frame):
         self.portstr=self.txt_port.GetValue()
         self.username='root'
         if value_info=='':
-            self.setupLog(args_log="IP¼°ÃÜÂëĞÅÏ¢Îª¿Õ£¡£¡£¡")
+            self.setupLog(args_log="IPåŠå¯†ç ä¿¡æ¯ä¸ºç©ºï¼ï¼ï¼")
             return
         else:
             self.local_dir=self.txt_local.GetValue()
             self.remote_dir=self.txt_remote.GetValue()
             if self.local_dir=="":
-                self.setupLog(args_log="±¾µØÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                self.setupLog(args_log="æœ¬åœ°ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
             else:
                 if self.remote_dir=="":
-                    self.setupLog(args_log="Ô¶³ÌÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                    self.setupLog(args_log="è¿œç¨‹ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
                 else:
                     if self.portstr=='':
-                        self.setupLog(args_log="¶Ë¿ÚĞÅÏ¢Îª¿Õ!!!")
+                        self.setupLog(args_log="ç«¯å£ä¿¡æ¯ä¸ºç©º!!!")
                     else:
                         self.port=int(self.portstr)
                         threads=[]
@@ -264,10 +264,10 @@ class MainWindow(wx.Frame):
                                 #     mutex.acquire()
                                 #     threads[i].start()
                                 #     mutex.release()
-                                self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬¿ªÊ¼Ö´ĞĞ¡­¡­'%(self.count))
+                                self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œå¼€å§‹æ‰§è¡Œâ€¦â€¦'%(self.count))
                         except Exception , e:
                             self.setupLog(args_log='**************************************************************')
-                            self.setupLog(args_log="Çë¼ì²éip¼°ÃÜÂëĞÅÏ¢ÊÇ·ñÕıÈ·!!!")
+                            self.setupLog(args_log="è¯·æ£€æŸ¥ipåŠå¯†ç ä¿¡æ¯æ˜¯å¦æ­£ç¡®!!!")
                             self.setupLog(args_log="[error][ip]"+self.now_time+" "+str(e))
                             self.btn_run.Enable(True)
     def setupDownload(self,file):
@@ -276,20 +276,20 @@ class MainWindow(wx.Frame):
         self.portstr=self.txt_port.GetValue()
         self.username='root'
         if value_info=='':
-            self.setupLog(args_log="IP¼°ÃÜÂëĞÅÏ¢Îª¿Õ£¡£¡£¡")
+            self.setupLog(args_log="IPåŠå¯†ç ä¿¡æ¯ä¸ºç©ºï¼ï¼ï¼")
             return
         else:
             # try:
             self.local_dir=self.txt_local.GetValue()
             self.remote_dir=self.txt_remote.GetValue()
             if self.local_dir=="":
-                self.setupLog(args_log="±¾µØÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                self.setupLog(args_log="æœ¬åœ°ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
             else:
                 if self.remote_dir=="":
-                    self.setupLog(args_log="Ô¶³ÌÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                    self.setupLog(args_log="è¿œç¨‹ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
                 else:
                     if self.portstr=='':
-                        self.setupLog(args_log="¶Ë¿ÚĞÅÏ¢Îª¿Õ!!!")
+                        self.setupLog(args_log="ç«¯å£ä¿¡æ¯ä¸ºç©º!!!")
                     else:
                         threads=[]
                         self.port=int(self.portstr)
@@ -314,10 +314,10 @@ class MainWindow(wx.Frame):
                                 #     mutex.acquire()
                                 #     threads[i].start()
                                 #     mutex.release()
-                                self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬¿ªÊ¼Ö´ĞĞ¡­¡­'%(self.count))
+                                self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œå¼€å§‹æ‰§è¡Œâ€¦â€¦'%(self.count))
                         except Exception , e:
                             self.setupLog(args_log='**************************************************************')
-                            self.setupLog(args_log="Çë¼ì²éip¼°ÃÜÂëĞÅÏ¢ÊÇ·ñÕıÈ·!!!")
+                            self.setupLog(args_log="è¯·æ£€æŸ¥ipåŠå¯†ç ä¿¡æ¯æ˜¯å¦æ­£ç¡®!!!")
                             self.setupLog(args_log="[error][ip]"+self.now_time+" "+str(e))
                             self.btn_run.Enable(True)
     def setupCmdKey(self,file):
@@ -330,32 +330,32 @@ class MainWindow(wx.Frame):
         self.timeout=2
         self.username='root'
         if value_info=='':
-            self.setupLog(args_log="IP¼°ÃÜÂëĞÅÏ¢Îª¿Õ£¡£¡£¡")
+            self.setupLog(args_log="IPåŠå¯†ç ä¿¡æ¯ä¸ºç©ºï¼ï¼ï¼")
         else:
             line_cmd=self.txt_cmd.GetNumberOfLines()
             value_cmd=self.txt_cmd.GetValue()
             if value_cmd=='':
-                self.setupLog(args_log="ÃüÁîĞÅÏ¢Îª¿Õ!!!")
+                self.setupLog(args_log="å‘½ä»¤ä¿¡æ¯ä¸ºç©º!!!")
             else:
                 if self.portstr=='':
-                    self.setupLog(args_log="¶Ë¿ÚĞÅÏ¢Îª¿Õ!!!")
+                    self.setupLog(args_log="ç«¯å£ä¿¡æ¯ä¸ºç©º!!!")
                 else:
                     self.port=int(self.portstr)
                     if self.keyfile=='':
-                        self.setupLog(args_log="KeyÎÄ¼şĞÅÏ¢Îª¿Õ!!!")
+                        self.setupLog(args_log="Keyæ–‡ä»¶ä¿¡æ¯ä¸ºç©º!!!")
                     else:
                         if self.keypwd=='':
-                            self.setupLog(args_log="KeyÃÜÂëĞÅÏ¢Îª¿Õ!!!")
+                            self.setupLog(args_log="Keyå¯†ç ä¿¡æ¯ä¸ºç©º!!!")
                         else:
                             try:
                                 for j in range(0,line_cmd,1):
                                     line_cmds=self.txt_cmd.GetLineText(j).strip()
-                                    #»ñÈ¡ÃüÁî
+                                    #è·å–å‘½ä»¤
                                     self.cmds.append(line_cmds)
                                 self.setupLog(args_log="[Command:] %s"%(string.join(self.cmds)))
                             except Exception , e:
                                 self.setupLog(args_log='**************************************************************')
-                                self.setupLog(args_log="Çë¼ì²éÃüÁîĞÅÏ¢ÊÇ·ñÕıÈ·£¡£¡£¡")
+                                self.setupLog(args_log="è¯·æ£€æŸ¥å‘½ä»¤ä¿¡æ¯æ˜¯å¦æ­£ç¡®ï¼ï¼ï¼")
                             try:
                                 self.setupLog(args_log='****ALL START CMD****')
                                 file.write("****ALL START CMD****\n")
@@ -376,10 +376,10 @@ class MainWindow(wx.Frame):
                                     #     mutex.acquire()
                                     #     threads[i].start()
                                     #     mutex.release()
-                                    self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬¿ªÊ¼Ö´ĞĞ¡­¡­'%(self.count))
+                                    self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œå¼€å§‹æ‰§è¡Œâ€¦â€¦'%(self.count))
                             except Exception , e:
                                 self.setupLog(args_log='**************************************************************')
-                                self.setupLog(args_log="Çë¼ì²éIP¼°ÃÜÂëĞÅÏ¢ÊÇ·ñÕıÈ·£¡£¡£¡")
+                                self.setupLog(args_log="è¯·æ£€æŸ¥IPåŠå¯†ç ä¿¡æ¯æ˜¯å¦æ­£ç¡®ï¼ï¼ï¼")
                                 self.setupLog(args_log="[error][ip]"+self.now_time+" "+str(e))
                                 self.btn_run.Enable(True)
     def setupUploadKey(self,file):
@@ -390,26 +390,26 @@ class MainWindow(wx.Frame):
         self.keypwd=self.txt_keypwd.GetValue()
         self.username='root'
         if value_info=='':
-            self.setupLog(args_log="IP¼°ÃÜÂëĞÅÏ¢Îª¿Õ£¡£¡£¡")
+            self.setupLog(args_log="IPåŠå¯†ç ä¿¡æ¯ä¸ºç©ºï¼ï¼ï¼")
             return
         else:
             self.local_dir=self.txt_local.GetValue()
             self.remote_dir=self.txt_remote.GetValue()
             if self.local_dir=="":
-                self.setupLog(args_log="±¾µØÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                self.setupLog(args_log="æœ¬åœ°ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
             else:
                 if self.remote_dir=="":
-                    self.setupLog(args_log="Ô¶³ÌÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                    self.setupLog(args_log="è¿œç¨‹ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
                 else:
                     if self.portstr=='':
-                        self.setupLog(args_log="¶Ë¿ÚĞÅÏ¢Îª¿Õ!!!")
+                        self.setupLog(args_log="ç«¯å£ä¿¡æ¯ä¸ºç©º!!!")
                     else:
                         self.port=int(self.portstr)
                         if self.keyfile=='':
-                            self.setupLog(args_log="KeyÎÄ¼şĞÅÏ¢Îª¿Õ!!!")
+                            self.setupLog(args_log="Keyæ–‡ä»¶ä¿¡æ¯ä¸ºç©º!!!")
                         else:
                             if self.keypwd=='':
-                                self.setupLog(args_log="KeyÃÜÂëĞÅÏ¢Îª¿Õ!!!")
+                                self.setupLog(args_log="Keyå¯†ç ä¿¡æ¯ä¸ºç©º!!!")
                             else:
                                 try:
                                     threads=[]
@@ -430,10 +430,10 @@ class MainWindow(wx.Frame):
                                         #     mutex.acquire()
                                         #     threads[i].start()
                                         #     mutex.release()
-                                        self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬¿ªÊ¼Ö´ĞĞ¡­¡­'%(self.count))
+                                        self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œå¼€å§‹æ‰§è¡Œâ€¦â€¦'%(self.count))
                                 except Exception , e:
                                     self.setupLog(args_log='**************************************************************')
-                                    self.setupLog(args_log="Çë¼ì²éip¼°ÃÜÂëĞÅÏ¢ÊÇ·ñÕıÈ·!!!")
+                                    self.setupLog(args_log="è¯·æ£€æŸ¥ipåŠå¯†ç ä¿¡æ¯æ˜¯å¦æ­£ç¡®!!!")
                                     self.setupLog(args_log="[error][ip]"+self.now_time+" "+str(e))
                                     self.btn_run.Enable(True)
     def setupDownloadKey(self,file):
@@ -444,27 +444,27 @@ class MainWindow(wx.Frame):
         self.keypwd=self.txt_keypwd.GetValue()
         self.username='root'
         if value_info=='':
-            self.setupLog(args_log="IP¼°ÃÜÂëĞÅÏ¢Îª¿Õ£¡£¡£¡")
+            self.setupLog(args_log="IPåŠå¯†ç ä¿¡æ¯ä¸ºç©ºï¼ï¼ï¼")
             return
         else:
             # try:
             self.local_dir=self.txt_local.GetValue()
             self.remote_dir=self.txt_remote.GetValue()
             if self.local_dir=="":
-                self.setupLog(args_log="±¾µØÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                self.setupLog(args_log="æœ¬åœ°ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
             else:
                 if self.remote_dir=="":
-                    self.setupLog(args_log="Ô¶³ÌÄ¿Â¼²»ÄÜÎª¿Õ!!!")
+                    self.setupLog(args_log="è¿œç¨‹ç›®å½•ä¸èƒ½ä¸ºç©º!!!")
                 else:
                     if self.portstr=='':
-                        self.setupLog(args_log="¶Ë¿ÚĞÅÏ¢Îª¿Õ!!!")
+                        self.setupLog(args_log="ç«¯å£ä¿¡æ¯ä¸ºç©º!!!")
                     else:
                         self.port=int(self.portstr)
                         if self.keyfile=='':
-                            self.setupLog(args_log="KeyÎÄ¼şĞÅÏ¢Îª¿Õ!!!")
+                            self.setupLog(args_log="Keyæ–‡ä»¶ä¿¡æ¯ä¸ºç©º!!!")
                         else:
                             if self.keypwd=='':
-                                self.setupLog(args_log="KeyÃÜÂëĞÅÏ¢Îª¿Õ!!!")
+                                self.setupLog(args_log="Keyå¯†ç ä¿¡æ¯ä¸ºç©º!!!")
                             else:
                                 try:
                                     threads=[]
@@ -485,10 +485,10 @@ class MainWindow(wx.Frame):
                                         #     mutex.acquire()
                                         #     threads[i].start()
                                         #     mutex.release()
-                                        self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬¿ªÊ¼Ö´ĞĞ¡­¡­'%(self.count))
+                                        self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œå¼€å§‹æ‰§è¡Œâ€¦â€¦'%(self.count))
                                 except Exception , e:
                                     self.setupLog(args_log='**************************************************************')
-                                    self.setupLog(args_log="Çë¼ì²éipĞÅÏ¢ÊÇ·ñÕıÈ·!!!")
+                                    self.setupLog(args_log="è¯·æ£€æŸ¥ipä¿¡æ¯æ˜¯å¦æ­£ç¡®!!!")
                                     self.setupLog(args_log="[error][ip]"+self.now_time+" "+str(e))
                                     self.btn_run.Enable(True)
     def setupLog(self,args_log):
@@ -496,12 +496,12 @@ class MainWindow(wx.Frame):
         self.txt_log.AppendText(args_log+"\n")
         # mutex.release()
     def onAbout(self, evt):
-        '''µã»÷aboutµÄÊÂ¼şÏìÓ¦'''
+        '''ç‚¹å‡»aboutçš„äº‹ä»¶å“åº”'''
         dlg = wx.MessageDialog(self, 'This app is a simple text editor', 'About my app', wx.OK)
         dlg.ShowModal()
         dlg.Destroy()
     def onExit(self, evt):
-        '''µã»÷ÍË³ö'''
+        '''ç‚¹å‡»é€€å‡º'''
         self.Close(True)
     def ssh2(self,ip,username,passwd,port,cmd,timeout,file):
         try:
@@ -513,25 +513,34 @@ class MainWindow(wx.Frame):
             # channel=transport.open_session()
             # channel.settimeout(timeout)
             for m in cmd:
-
+                # print m,
                 stdin,stdout,stderr = ssh.exec_command(m,timeout=timeout)
-                #stdin.write("Y")   #¼òµ¥½»»¥£¬ÊäÈë ¡®Y¡¯
+                #stdin.write("Y")   #ç®€å•äº¤äº’ï¼Œè¾“å…¥ â€˜Yâ€™
                 # out = stdout.readlines()
                 # errorout=stderr.readlines()
-                out = unicode(stdout.read(),"gbk")
-                errorout=unicode(stderr.read(),"gbk")
+                # out = unicode(stdout.read(),"gbk")
+                # errorout=unicode(stderr.read(),"gbk")
+                out=stdout.read()
+                errorout=stderr.read()
+                # print out,
+                # if type(out).__name__!="unicode":
+                #     str=unicode(out,"utf-8")
+                #     print str
+                # print out,
                 if cmp(out,"")>0:
-                    print out
+                    # print out
                     file.write("[succeed][cmd][%s]%s\n%s\n\n"%(ip,self.now_time,out))
                 else:
                     file.write("[error][cmd][%s]%s****Cause by :%s\n\n"%(ip,self.now_time,errorout))
             ssh.close()
             self.cdone.append(ip)
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='ip:[%s]'%(ip))
         except Exception,e :
             self.cfail.append(ip)
             file.write("[error][cmd]%s\t%s\tError\t****Cause by :%s****end\n\n"%(ip,self.now_time,e))
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='ip:[%s] ***fail***'%(ip))
             print "[error][cmd][%s]\t%s\tError\t****Cause by :%s****end\n\n"%(ip,self.now_time,e)
             self.btn_run.Enable(True)
         finally:
@@ -559,20 +568,20 @@ class MainWindow(wx.Frame):
                 # self.setupLog(args_log='Downloading file:'+os.path.join(remote_dir, f))
                 # self.setupLog(args_log='To dir:'+os.path.join(local_dir, f))
                 file.write('To dir:%s \n'%(os.path.join(local_dir, f)))
-                sftp.get(os.path.join(remote_dir, f), os.path.join(local_dir, f))#ÏÂÔØ
+                sftp.get(os.path.join(remote_dir, f), os.path.join(local_dir, f))#ä¸‹è½½
                 file.write('Download file success %s \n\n' % datetime.datetime.now())
                 # self.setupLog(args_log='Download file success %s ' % datetime.datetime.now())
                 # self.setupLog(args_log='--------------------------------------------------------------')
             t.close()
             self.cdone.append(ip)
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
         except Exception,e:
             self.cfail.append(ip)
             # self.setupLog(args_log='**************************************************************')
             # self.setupLog(args_log="[error][download]"+ip+" "+self.now_time+" "+str(e))
             print "[error][download]"+ip+" "+self.now_time+" "+str(e)
             file.write("[error][download]%s %s %s \n"%(ip,self.now_time,str(e)))
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
             self.btn_run.Enable(True)
         finally:
             if self.count==(len(self.cdone)+len(self.cfail)):
@@ -599,20 +608,20 @@ class MainWindow(wx.Frame):
                 file.write('Uploading file:%s \n'%(os.path.join(local_dir, f)))
                 # self.setupLog(args_log='To dir:'+ os.path.join(remote_dir, f))
                 file.write('To dir:%s \n'%(os.path.join(remote_dir, f)))
-                sftp.put(os.path.join(local_dir, f), os.path.join(remote_dir, f))#ÉÏ´«
+                sftp.put(os.path.join(local_dir, f), os.path.join(remote_dir, f))#ä¸Šä¼ 
                 file.write('Upload file success %s \n\n' % datetime.datetime.now())
                 # self.setupLog(args_log='Upload file success %s ' % datetime.datetime.now())
                 # self.setupLog(args_log='--------------------------------------------------------------')
             t.close()
             self.cdone.append(ip)
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
         except Exception,e:
             self.cfail.append(ip)
             # self.setupLog(args_log='**************************************************************')
             # self.setupLog(args_log="[error][upload]"+ip+" "+self.now_time+" "+str(e))
             print "[error][upload]"+ip+" "+self.now_time+" "+str(e)
             file.write("[error][upload]%s %s %s \n"%(ip,self.now_time,str(e)))
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
             self.btn_run.Enable(True)
         finally:
             if self.count==(len(self.cdone)+len(self.cfail)):
@@ -630,11 +639,11 @@ class MainWindow(wx.Frame):
             ssh.connect(hostname=ip,port=port,username=username , pkey=mykey,timeout=timeout)
             for m in cmd:
                 stdin,stdout,stderr = ssh.exec_command(m,timeout=timeout)
-                #stdin.write("Y")   #¼òµ¥½»»¥£¬ÊäÈë ¡®Y¡¯
-                out = unicode(stdout.read(),"gbk")
-                errorout=unicode(stderr.read(),"gbk")
-                print out
-                print errorout
+                #stdin.write("Y")   #ç®€å•äº¤äº’ï¼Œè¾“å…¥ â€˜Yâ€™
+                out=stdout.read()
+                errorout=stderr.read()
+                # print out
+                # print errorout
                 if cmp(out,"")>0:
                     file.write("[succeed][cmd][%s]%s\n%s\n\n"%(ip,self.now_time,out))
                     self.setupLog(args_log="[succeed][cmd][%s]%s\n%s"%(ip,self.now_time,out))
@@ -643,12 +652,14 @@ class MainWindow(wx.Frame):
                     self.setupLog(args_log="[error][cmd][%s]%s****Cause by :%s\n\n"%(ip,self.now_time,errorout))
             ssh.close()
             self.cdone.append(ip)
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='ip:[%s]'%(ip))
             self.btn_run.Enable(True)
         except Exception,e :
             self.cfail.append(ip)
             file.write("[error][cmd]%s\t%s\tError\t****Cause by :%s****end\n\n"%(ip,self.now_time,e))
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='ip:[%s] ***fail***'%(ip))
             print "[error][cmd][%s]\t%s\tError\t****Cause by :%s****end\n\n"%(ip,self.now_time,e)
         finally:
             if self.count==(len(self.cdone)+len(self.cfail)):
@@ -675,20 +686,20 @@ class MainWindow(wx.Frame):
                 # self.setupLog(args_log='Downloading file:'+os.path.join(remote_dir, f))
                 # self.setupLog(args_log='To dir:'+os.path.join(local_dir, f))
                 file.write('To dir:%s \n'%(os.path.join(local_dir, f)))
-                sftp.get(os.path.join(remote_dir, f), os.path.join(local_dir, f))#ÏÂÔØ
+                sftp.get(os.path.join(remote_dir, f), os.path.join(local_dir, f))#ä¸‹è½½
                 file.write('Download file success %s \n\n' % datetime.datetime.now())
                 # self.setupLog(args_log='Download file success %s ' % datetime.datetime.now())
                 # self.setupLog(args_log='--------------------------------------------------------------')
             t.close()
             self.cdone.append(ip)
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
         except Exception,e:
             self.cfail.append(ip)
             # self.setupLog(args_log='**************************************************************')
             # self.setupLog(args_log="[error][download]"+ip+" "+self.now_time+" "+str(e))
             print "[error][download]"+ip+" "+self.now_time+" "+str(e)
             file.write("[error][download]%s %s %s \n"%(ip,self.now_time,str(e)))
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
             self.btn_run.Enable(True)
         finally:
             if self.count==(len(self.cdone)+len(self.cfail)):
@@ -715,20 +726,20 @@ class MainWindow(wx.Frame):
                 file.write('Uploading file:%s \n'%(os.path.join(local_dir, f)))
                 # self.setupLog(args_log='To dir:'+ os.path.join(remote_dir, f))
                 file.write('To dir:%s \n'%(os.path.join(remote_dir, f)))
-                sftp.put(os.path.join(local_dir, f), os.path.join(remote_dir, f))#ÉÏ´«
+                sftp.put(os.path.join(local_dir, f), os.path.join(remote_dir, f))#ä¸Šä¼ 
                 file.write('Upload file success %s \n\n' % datetime.datetime.now())
                 # self.setupLog(args_log='Upload file success %s ' % datetime.datetime.now())
                 # self.setupLog(args_log='--------------------------------------------------------------')
             t.close()
             self.cdone.append(ip)
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
         except Exception,e:
             self.cfail.append(ip)
             # self.setupLog(args_log='**************************************************************')
             # self.setupLog(args_log="[error][upload]"+ip+" "+self.now_time+" "+str(e))
             print "[error][upload]"+ip+" "+self.now_time+" "+str(e)
             file.write("[error][upload]%s %s %s \n"%(ip,self.now_time,str(e)))
-            self.setupLog(args_log='·şÎñÆ÷×ÜÊıÎª[%d]Ì¨£¬ÕıÔÚ²Ù×÷µÚ[%d]Ì¨£¬Ö´ĞĞÎ´Í¨¹ı[%d]Ì¨'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
+            self.setupLog(args_log='æœåŠ¡å™¨æ€»æ•°ä¸º[%d]å°ï¼Œæ­£åœ¨æ“ä½œç¬¬[%d]å°ï¼Œæ‰§è¡Œæœªé€šè¿‡[%d]å°'%(self.count,len(self.cdone)+len(self.cfail),len(self.cfail)))
             self.btn_run.Enable(True)
         finally:
             if self.count==(len(self.cdone)+len(self.cfail)):
@@ -854,5 +865,5 @@ class DownloadKeyThread(threading.Thread):
         mutex.release()
 mutex = threading.RLock()
 app = wx.App(redirect=False)
-frame = MainWindow(None, 'LINUX·şÎñÆ÷ÅúÁ¿¹ÜÀí¹¤¾ß')
-app.MainLoop() #Ñ­»·¼àÌıÊÂ¼ş
+frame = MainWindow(None, 'LINUXæœåŠ¡å™¨æ‰¹é‡ç®¡ç†å·¥å…·v1.1')
+app.MainLoop() #å¾ªç¯ç›‘å¬äº‹ä»¶
